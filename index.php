@@ -31,6 +31,43 @@ if ($errs = $store->getErrors()) {
     <link href="css/style.min.css" rel="stylesheet">
     <!-- Styles required by this views -->
 
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 
 <body class="app">
@@ -178,6 +215,54 @@ if ($errs = $store->getErrors()) {
                                         </div>
                                     </div>
                                     <div class="row mt-3">
+                                        <div class="col-md-3">
+                                            อาหารเช้า :
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                                   id="breakfastRange">
+                                        </div>
+                                        <div class="col-md-3 breakfastRangePercent">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            อาหารกลางวัน :
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                                   id="lunchRange">
+                                        </div>
+                                        <div class="col-md-3 lunchRangePercent">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            อาหารเย็น :
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                                   id="dinnerRange">
+                                        </div>
+                                        <div class="col-md-3 dinnerRangePercent">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            อาหารว่าง :
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                                   id="snackRange">
+                                        </div>
+                                        <div class="col-md-3 snackRangePercent">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
                                         <div class="col-md-12">
                                             <table class="table">
                                                 <thead>
@@ -213,7 +298,8 @@ if ($errs = $store->getErrors()) {
 <script src="js/app.js"></script>
 
 <script>
-    let gender, age, weight, height, activity_factor, disease, bmr, tdee, goal, weightGoal, dateGoal, timePerDay = null;
+    let gender = null, age = null, weight = null, height = null, activity_factor = null, disease = null, bmr = null, tdee = null, goal = null, weightGoal = null, dateGoal = null, timePerDay = null;
+    let breakfastRange = 0, lunchRange = 0, dinnerRange = 0, snackRange = 0;
     $(document).off('click', '.nextToPartTwo').on('click', '.nextToPartTwo', e => {
         gender = $("select[name='gender']").val();
         age = $("select[name='age']").val();
@@ -265,6 +351,67 @@ if ($errs = $store->getErrors()) {
             });
         }
     });
+
+    $(document).off('change', '#breakfastRange').on('change', '#breakfastRange', e => {
+        let maxRange = getMaxRange(0);
+        if ($(e.currentTarget).val() <= maxRange) {
+            breakfastRange = Number($(e.currentTarget).val());
+            $('.breakfastRangePercent').html(breakfastRange + '%');
+        } else {
+            breakfastRange = maxRange;
+            $('.breakfastRangePercent').html(breakfastRange + '%');
+            $(e.currentTarget).val(breakfastRange);
+        }
+    });
+
+    $(document).off('change', '#lunchRange').on('change', '#lunchRange', e => {
+        let maxRange = getMaxRange(1);
+        if ($(e.currentTarget).val() <= maxRange) {
+            lunchRange = Number($(e.currentTarget).val());
+            $('.lunchRangePercent').html(lunchRange + '%');
+        } else {
+            lunchRange = maxRange;
+            $('.lunchRangePercent').html(lunchRange + '%');
+            $(e.currentTarget).val(lunchRange);
+        }
+    });
+
+    $(document).off('change', '#dinnerRange').on('change', '#dinnerRange', e => {
+        let maxRange = getMaxRange(2);
+        if ($(e.currentTarget).val() <= maxRange) {
+            dinnerRange = Number($(e.currentTarget).val());
+            $('.dinnerRangePercent').html(dinnerRange + '%');
+        } else {
+            dinnerRange = maxRange;
+            $('.dinnerRangePercent').html(dinnerRange + '%');
+            $(e.currentTarget).val(dinnerRange);
+        }
+    });
+
+    $(document).off('change', '#snackRange').on('change', '#snackRange', e => {
+        let maxRange = getMaxRange(3);
+        if ($(e.currentTarget).val() <= maxRange) {
+            snackRange = Number($(e.currentTarget).val());
+            $('.snackRangePercent').html(snackRange + '%');
+        } else {
+            snackRange = maxRange;
+            $('.snackRangePercent').html(snackRange + '%');
+            $(e.currentTarget).val(snackRange);
+        }
+    });
+
+    function getMaxRange(type) {
+        switch (type) {
+            case 0:
+                return (100 - (lunchRange + dinnerRange + snackRange));
+            case 1:
+                return (100 - (breakfastRange + dinnerRange + snackRange));
+            case 2:
+                return (100 - (breakfastRange + lunchRange + snackRange));
+            case 3:
+                return (100 - (breakfastRange + lunchRange + dinnerRange));
+        }
+    }
 
     $(document).on('change', '#activity_factor', e => {
         $('.jumbotron').html('<p class="lead">' + $(e.currentTarget).find(':selected').attr('data-description') + '</p>').show();
