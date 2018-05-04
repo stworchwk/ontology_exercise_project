@@ -219,7 +219,7 @@ if ($errs = $store->getErrors()) {
                                             อาหารเช้า :
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                            <input type="range" min="0" max="100" value="0" step="5" class="slider"
                                                    id="breakfastRange">
                                         </div>
                                         <div class="col-md-3 breakfastRangePercent">
@@ -231,7 +231,7 @@ if ($errs = $store->getErrors()) {
                                             อาหารกลางวัน :
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                            <input type="range" min="0" max="100" value="0" step="5" class="slider"
                                                    id="lunchRange">
                                         </div>
                                         <div class="col-md-3 lunchRangePercent">
@@ -243,7 +243,7 @@ if ($errs = $store->getErrors()) {
                                             อาหารเย็น :
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                            <input type="range" min="0" max="100" value="0" step="5" class="slider"
                                                    id="dinnerRange">
                                         </div>
                                         <div class="col-md-3 dinnerRangePercent">
@@ -255,11 +255,29 @@ if ($errs = $store->getErrors()) {
                                             อาหารว่าง :
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="range" min="0" max="100" value="0" class="slider"
+                                            <input type="range" min="0" max="100" value="0" step="5" class="slider"
                                                    id="snackRange">
                                         </div>
                                         <div class="col-md-3 snackRangePercent">
                                             0%
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            สิ่งที่ไม่รับประทาน :
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control"
+                                                   placeholder="เช่น หมู เนื้อ บร็อคโคลี่ เป็นต้น" id="ingredientFood">
+                                        </div>
+                                        <div class="col-md-3 allRangePercent text-danger">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 offset-md-1 text-danger foodPercentAlert"
+                                             style="display: none">
+                                            โปรดเลือกเปอร์เซ็นต์ของแต่ละมื้ออาหาร ให้ครบ 100 เปอร์เซ็นต์ด้วย
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -271,12 +289,90 @@ if ($errs = $store->getErrors()) {
                                                     <th>วิธีการออกกำลังกาย</th>
                                                     <th>แคลอรี่จากการออกกำลังกาย</th>
                                                     <th>แคลอรี่ที่กินได้ต่อวัน</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="tableBody">
+                                                <tr>
+                                                    <td colspan="4">ยังไม่มีการค้นหา</td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3 foodResult" style="display: none">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="card card-accent-primary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <h4>อาหารเช้า</h4>
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>ชื่ออาหาร</th>
+                                                <th>แคลลอรี่</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="breakfastTable">
+                                            <tr>
+                                                <td colspan="2">ไม่มีข้อมูล</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h4>อาหารกลางวัน</h4>
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>ชื่ออาหาร</th>
+                                                <th>แคลลอรี่</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="lunchTable">
+                                            <tr>
+                                                <td colspan="2">ไม่มีข้อมูล</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h4>อาหารเย็น</h4>
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>ชื่ออาหาร</th>
+                                                <th>แคลลอรี่</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="dinnerTable">
+                                            <tr>
+                                                <td colspan="2">ไม่มีข้อมูล</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h4>อาหารว่าง</h4>
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>ชื่ออาหาร</th>
+                                                <th>แคลลอรี่</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="snackTable">
+                                            <tr>
+                                                <td colspan="2">ไม่มีข้อมูล</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -298,7 +394,8 @@ if ($errs = $store->getErrors()) {
 <script src="js/app.js"></script>
 
 <script>
-    let gender = null, age = null, weight = null, height = null, activity_factor = null, disease = null, bmr = null, tdee = null, goal = null, weightGoal = null, dateGoal = null, timePerDay = null;
+    let gender = null, age = null, weight = null, height = null, activity_factor = null, disease = null, bmr = null,
+        tdee = null, goal = null, weightGoal = null, dateGoal = null, timePerDay = null;
     let breakfastRange = 0, lunchRange = 0, dinnerRange = 0, snackRange = 0;
     $(document).off('click', '.nextToPartTwo').on('click', '.nextToPartTwo', e => {
         gender = $("select[name='gender']").val();
@@ -345,7 +442,7 @@ if ($errs = $store->getErrors()) {
                 data.forEach(function (e, index) {
                     let kcal_exercise = (gender === 'male' ? (e.exercise_kcal_burn_per_minute_male * timePerDay) : (e.exercise_kcal_burn_per_minute_female * timePerDay));
                     let kcal_eat = kcal_exercise + goal;
-                    tableContent += '<tr><td>' + (index + 1) + '</td><td>' + e.exercise_name + '</td><td><i class="fa fa-arrow-up text-success"></i> ' + kcal_exercise.toFixed(2) + '</td><td><i class="fa fa-arrow-down text-danger"></i> ' + kcal_eat.toFixed(2) + '</td></tr>';
+                    tableContent += '<tr><td>' + (index + 1) + '</td><td>' + e.exercise_name + '</td><td><i class="fa fa-arrow-up text-success"></i> ' + kcal_exercise.toFixed(2) + '</td><td><i class="fa fa-arrow-down text-danger"></i> ' + kcal_eat.toFixed(2) + '</td><td><a class="btn btn-sm btn-primary selectExercise text-white" data-kcal-eat="' + kcal_eat.toFixed(2) + '">เลือก</a></td></tr>';
                 });
                 $('.tableBody').html(tableContent);
             });
@@ -362,6 +459,13 @@ if ($errs = $store->getErrors()) {
             $('.breakfastRangePercent').html(breakfastRange + '%');
             $(e.currentTarget).val(breakfastRange);
         }
+        if (getAllRange() < 100) {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-success').addClass('text-danger');
+            $('.foodPercentAlert').show(300);
+        } else {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-danger').addClass('text-success');
+            $('.foodPercentAlert').hide(300);
+        }
     });
 
     $(document).off('change', '#lunchRange').on('change', '#lunchRange', e => {
@@ -373,6 +477,13 @@ if ($errs = $store->getErrors()) {
             lunchRange = maxRange;
             $('.lunchRangePercent').html(lunchRange + '%');
             $(e.currentTarget).val(lunchRange);
+        }
+        if (getAllRange() < 100) {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-success').addClass('text-danger');
+            $('.foodPercentAlert').show(300);
+        } else {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-danger').addClass('text-success');
+            $('.foodPercentAlert').hide(300);
         }
     });
 
@@ -386,6 +497,13 @@ if ($errs = $store->getErrors()) {
             $('.dinnerRangePercent').html(dinnerRange + '%');
             $(e.currentTarget).val(dinnerRange);
         }
+        if (getAllRange() < 100) {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-success').addClass('text-danger');
+            $('.foodPercentAlert').show(300);
+        } else {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-danger').addClass('text-success');
+            $('.foodPercentAlert').hide(300);
+        }
     });
 
     $(document).off('change', '#snackRange').on('change', '#snackRange', e => {
@@ -397,6 +515,13 @@ if ($errs = $store->getErrors()) {
             snackRange = maxRange;
             $('.snackRangePercent').html(snackRange + '%');
             $(e.currentTarget).val(snackRange);
+        }
+        if (getAllRange() < 100) {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-success').addClass('text-danger');
+            $('.foodPercentAlert').show(300);
+        } else {
+            $('.allRangePercent').html(getAllRange() + '%').removeClass('text-danger').addClass('text-success');
+            $('.foodPercentAlert').hide(300);
         }
     });
 
@@ -412,6 +537,81 @@ if ($errs = $store->getErrors()) {
                 return (100 - (breakfastRange + lunchRange + dinnerRange));
         }
     }
+
+    function getAllRange() {
+        return (breakfastRange + lunchRange + dinnerRange + snackRange);
+    }
+
+    $(document).off('click', '.selectExercise').on('click', '.selectExercise', e => {
+        if ((breakfastRange + lunchRange + dinnerRange + snackRange) !== 100) {
+            $('.allRangePercent').removeClass('text-success').addClass('text-danger').focus();
+            $('.foodPercentAlert').show(300);
+        } else {
+            let allKcalEat = e.target.attributes.getNamedItem('data-kcal-eat').value;
+            let breakfastRangeValue = (breakfastRange * allKcalEat) / 100;
+            let lunchRangeValue = (lunchRange * allKcalEat) / 100;
+            let dinnerRangeValue = (dinnerRange * allKcalEat) / 100;
+            let snackRangeValue = (snackRange * allKcalEat) / 100;
+            let ingredient = $('#ingredientFood').val();
+
+            let breakfastRangeContent = null, lunchRangeContent = null, dinnerRangeContent = null, snackRangeContent = null;
+
+            $.ajax({
+                url: "api.php?function=getFood&kcal=" + breakfastRangeValue.toFixed(2) + "&time=b&$ingredient=" + ingredient
+            }).done(function (data) {
+                if (data.length > 0) {
+                    data.forEach(function (e, index) {
+                        breakfastRangeContent += '<tr><td>' + e.food_name + '</td><td>' + e.food_kcal_give + ' / ' + e.food_unit + '</td></tr>';
+                    });
+                }else{
+                    breakfastRangeContent = '<tr><td colspan="2">ไม่มีข้อมูล</td></tr>';
+                }
+                $('.breakfastTable').html(breakfastRangeContent);
+            });
+
+            $.ajax({
+                url: "api.php?function=getFood&kcal=" + lunchRangeValue.toFixed(2) + "&time=l&$ingredient=" + ingredient
+            }).done(function (data) {
+                if (data.length > 0) {
+                    data.forEach(function (e, index) {
+                        lunchRangeContent += '<tr><td>' + e.food_name + '</td><td>' + e.food_kcal_give + ' / ' + e.food_unit + '</td></tr>';
+                    });
+                }else{
+                    lunchRangeContent = '<tr><td colspan="2">ไม่มีข้อมูล</td></tr>';
+                }
+                $('.lunchTable').html(lunchRangeContent);
+            });
+
+            $.ajax({
+                url: "api.php?function=getFood&kcal=" + dinnerRangeValue.toFixed(2) + "&time=d&$ingredient=" + ingredient
+            }).done(function (data) {
+                if (data.length > 0) {
+                    data.forEach(function (e, index) {
+                        dinnerRangeContent += '<tr><td>' + e.food_name + '</td><td>' + e.food_kcal_give + ' / ' + e.food_unit + '</td></tr>';
+                    });
+                }else{
+                    dinnerRangeContent = '<tr><td colspan="2">ไม่มีข้อมูล</td></tr>';
+                }
+                $('.dinnerTable').html(dinnerRangeContent);
+            });
+
+            $.ajax({
+                url: "api.php?function=getFood&kcal=" + snackRangeValue.toFixed(2) + "&time=s&$ingredient=" + ingredient
+            }).done(function (data) {
+                if (data.length > 0) {
+                    data.forEach(function (e, index) {
+                        snackRangeContent += '<tr><td>' + e.food_name + '</td><td>' + e.food_kcal_give + ' / ' + e.food_unit + '</td></tr>';
+                    });
+                }else{
+                    snackRangeContent = '<tr><td colspan="2">ไม่มีข้อมูล</td></tr>';
+                }
+                $('.snackTable').html(snackRangeContent);
+            });
+
+            $('.foodResult').show(300);
+            $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+        }
+    });
 
     $(document).on('change', '#activity_factor', e => {
         $('.jumbotron').html('<p class="lead">' + $(e.currentTarget).find(':selected').attr('data-description') + '</p>').show();
